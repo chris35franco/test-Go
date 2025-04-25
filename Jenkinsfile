@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Descargar código') {
             steps {
-                git 'https://github.com/chris35franco/test-Go'
+                git branch: 'main', url: 'https://github.com/chris35franco/test-Go'
             }
         }
         stage('Compilar') {
@@ -21,3 +21,4 @@ pipeline {
         }
     }
 }
+
