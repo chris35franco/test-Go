@@ -1,36 +1,23 @@
 pipeline {
-    agent { label 'Go' }
-
-    stages {
-        stage('Construir Imagen Docker') {
-            steps {
-                script {
-                    docker.build('mi-imagen-go', './')
-                }
-            }
+    agent {
+        docker {
+            image 'golang:1.21'
         }
-
+    }
+    stages {
         stage('Compilar') {
             steps {
-                script {
-                    docker.image('mi-imagen-go').inside {
-                        sh 'go build'
-                    }
-                }
+                sh 'go build -o app'
             }
         }
-
         stage('Pruebas') {
             steps {
-                script {
-                    docker.image('mi-imagen-go').inside {
-                        sh 'go test ./...'
-                    }
-                }
+                sh 'go test ./...'
             }
         }
     }
 }
+
 
 
 
