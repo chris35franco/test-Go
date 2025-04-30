@@ -1,17 +1,11 @@
 pipeline {
-    agent { label 'Go' }  // usa el nodo con la etiqueta 'Go'
+    agent { label 'Go' }
 
     stages {
-        stage('Descargar código') {
-            steps {
-                git 'https://github.com/chris35franco/test-Go'
-            }
-        }
-
         stage('Construir Imagen Docker') {
             steps {
                 script {
-                    docker.build('mi-imagen-go', './')  // ahora sí tiene acceso al Dockerfile
+                    docker.build('mi-imagen-go', './')
                 }
             }
         }
@@ -37,5 +31,6 @@ pipeline {
         }
     }
 }
+
 
 
