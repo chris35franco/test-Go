@@ -7,6 +7,9 @@ RUN useradd -m -d /home/jenkins -s /bin/bash jenkins
 # Establece el usuario
 USER jenkins
 
+# Agrega Go al PATH (esto debería estar ya en la imagen oficial, pero es bueno asegurarse)
+ENV PATH="/usr/local/go/bin:${PATH}"
+
 # Directorio de trabajo
 WORKDIR /home/jenkins/app
 
