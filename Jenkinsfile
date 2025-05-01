@@ -7,8 +7,9 @@ pipeline {
         stage('Verificar PATH') {
             steps {
                 script {
-                    sh 'echo $PATH'
-                    sh 'go version'
+                    sh 'echo $PATH'  // Imprime el PATH para verificar que go está accesible
+                    sh 'go version'   // Verifica que Go está correctamente instalado
+                    sh 'ls -l /home/jenkins/go/bin' // Verifica que el binario de Go está en la ruta correcta
                 }
             }
         }
@@ -19,21 +20,22 @@ pipeline {
         }
         stage('Instalar dependencias') {
             steps {
-                sh 'go mod tidy'
+                sh 'go mod tidy'  // Instala dependencias de Go
             }
         }
         stage('Compilar') {
             steps {
-                sh 'go build -o app'
+                sh 'go build -o app'  // Compila el proyecto
             }
         }
         stage('Pruebas') {
             steps {
-                sh 'go test ./...'
+                sh 'go test ./...'  // Ejecuta las pruebas
             }
         }
     }
 }
+
 
 
 
