@@ -1,12 +1,14 @@
 pipeline {
     agent { label 'Go' }
+    environment {
+        PATH = "/home/jenkins/go/bin:${env.PATH}"
+    }
     stages {
         stage('Verificar PATH') {
             steps {
                 script {
-                    // Verificar que el PATH esté configurado correctamente
                     sh 'echo $PATH'
-                    sh 'go version' // Asegurarse de que Go esté instalado y accesible
+                    sh 'go version'
                 }
             }
         }
@@ -17,26 +19,22 @@ pipeline {
         }
         stage('Instalar dependencias') {
             steps {
-                script {
-                    // Asegurarse de que las dependencias estén descargadas
-                    sh 'go mod tidy'
-                }
+                sh 'go mod tidy'
             }
         }
         stage('Compilar') {
             steps {
-                // Compilar el código
                 sh 'go build -o app'
             }
         }
         stage('Pruebas') {
             steps {
-                // Ejecutar las pruebas
                 sh 'go test ./...'
             }
         }
     }
 }
+
 
 
 
