@@ -1,10 +1,13 @@
 pipeline {
-    agent { label 'Go' }  // El agente debe tener esta etiqueta y tener Go instalado
-
+    agent {
+        docker {
+            image 'agente-go'
+            args '-u jenkins'
+        }
+    }
     environment {
         PATH = "/usr/local/go/bin:/home/jenkins/go/bin:${env.PATH}"
     }
-
     stages {
         stage('Verificar PATH') {
             steps {
@@ -12,25 +15,21 @@ pipeline {
                 sh 'go version'
             }
         }
-
         stage('Descargar código') {
             steps {
                 git branch: 'main', url: 'https://github.com/chris35franco/test-Go.git'
             }
         }
-
         stage('Instalar dependencias') {
             steps {
                 sh 'go mod tidy'
             }
         }
-
         stage('Compilar') {
             steps {
                 sh 'go build -o app'
             }
         }
-
         stage('Pruebas') {
             steps {
                 sh 'go test ./...'
@@ -38,6 +37,7 @@ pipeline {
         }
     }
 }
+
 
 
 
