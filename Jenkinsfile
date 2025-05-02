@@ -1,9 +1,6 @@
 pipeline {
     agent {
-        docker {
-            image 'agente-go'
-            args '-u jenkins'
-        }
+        label 'agent2' // Nombre del nodo agente (con Go instalado)
     }
     environment {
         PATH = "/usr/local/go/bin:/home/jenkins/go/bin:${env.PATH}"
@@ -37,6 +34,7 @@ pipeline {
         }
     }
 }
+
 
 
 
